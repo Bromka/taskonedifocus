@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.js"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Задание Илья Ефимов</title>
+</head>
+
+<body>
+
+    <!--         Cделать форму обратной связи с выбором куда отправлять заявку (текстовый файл, mysql) и возможностью добавлять места для хранения заявок (использовать паттерн фабрика).
+        Поля: имя, телефон, само обращение.
+        Что необходимо использовать:
+        - PHP 7
+        - Composer
+        - ООП (для создания заявки и места для хранения заявки)
+        - Фронтенд (желательно vuejs) -->
+
+    <div class="container">
+        <div class="row justify-content-md-center mt-5">
+            <div class="col-md-4 bg-light p-3 rounded border border-success">
+                <form id="app" v-on:submit.prevent>
+                    <div class="wrapform" v-if="showform">
+                        <label for="userName" class="ml-3 mt-3">Введите ваше имя</label>
+                        <input type="text" v-on:keyup="validateForm" v-model="requestdata.name" id="userName"
+                            class="form-control" name="userName">
+
+
+                        <label for="phoneNum" class="ml-3 mt-3">Введите номер телефона</label>
+                        <input type="text" v-on:keyup="validateForm" v-model.number="requestdata.phoneNum" id="phoneNum"
+                            class="form-control" name="phoneNum">
+                        <label for="message" class="ml-3 mt-3">Какие у вас вопросы?</label>
+                        <textarea id="message" v-on:keyup="validateForm" placeholder="Обращение" rows="3"
+                            v-model="requestdata.message" class="form-control mb-3" name="message"></textarea>
+                        <label for="file">Сохранить в файле</label>
+                        <input type="radio" id="file" name="storage" value="file" v-model="requestdata.storage">
+                        <label for="database">Сохранить в базе данных</label>
+                        <input type="radio" id="database" name="storage" v-model="requestdata.storage" value="db">
+                        <div class="col text-center mt-3 mb-3">
+                            <input type="submit" class="btn btn-success" @click="fetchRequest"
+                                v-bind:disabled="isButtonDisabled" value="Оставить заявку" type="submit">
+                        </div>
+
+                    </div>
+                    <div class="responseform text-center" v-if="responseform">
+                        <h2>Спасибо за обращение</h2>
+                        <p>{{responseMessage}}</p>
+                        <button class="btn btn-success"  onclick="document.location.reload(true);">Оставить еще одну заявку</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
